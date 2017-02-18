@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://arthurhoo.github.io/atom.xml" rel="self"/>
+  <link href="http://arthurhoo.github.io/"/>
+  <updated>2017-02-17T23:26:30+08:00</updated>
+  <id>http://arthurhoo.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[First Blog]]></title>
+    <link href="http://arthurhoo.github.io/blog/2017/02/17/first-blog/"/>
+    <updated>2017-02-17T22:51:25+08:00</updated>
+    <id>http://arthurhoo.github.io/blog/2017/02/17/first-blog</id>
+    <content type="html"><![CDATA[<h1>First Blog Page</h1>
+
+<p>Hello World!</p>
+]]></content>
+  </entry>
+  
+</feed>
