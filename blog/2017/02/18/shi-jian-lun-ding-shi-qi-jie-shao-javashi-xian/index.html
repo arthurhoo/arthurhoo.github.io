@@ -1,24 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Arthur's Blog]]></title>
-  <link href="http://arthurhoo.github.io/atom.xml" rel="self"/>
-  <link href="http://arthurhoo.github.io/"/>
-  <updated>2017-02-18T23:46:36+08:00</updated>
-  <id>http://arthurhoo.github.io/</id>
-  <author>
-    <name><![CDATA[Arthurhoo]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>时间轮定时器介绍-Java实现 - Arthur's Blog</title>
+  <meta name="author" content="Arthurhoo">
 
   
-  <entry>
-    <title type="html"><![CDATA[时间轮定时器介绍-Java实现]]></title>
-    <link href="http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/"/>
-    <updated>2017-02-18T22:03:27+08:00</updated>
-    <id>http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian</id>
-    <content type="html"><![CDATA[<h2>0. 背景</h2>
+  <meta name="description" content="0. 背景 很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就
+改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Arthur's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Arthur's Blog</a></h1>
+  
+    <h2>求学问道 知行合一</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="arthurhoo.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">时间轮定时器介绍-Java实现</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2017-02-18T22:03:27+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:03 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>0. 背景</h2>
 
 <p>很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就
 改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含，可以自己实现一个定时器。</p>
@@ -385,18 +452,101 @@ TimeWheel主要包含四个：
 <h3>总结</h3>
 
 <p>本文讲述了全局定时器的时间轮算法实现方式，如有不妥欢迎大家指出。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[First Blog]]></title>
-    <link href="http://arthurhoo.github.io/blog/2017/02/17/first-blog/"/>
-    <updated>2017-02-17T22:51:25+08:00</updated>
-    <id>http://arthurhoo.github.io/blog/2017/02/17/first-blog</id>
-    <content type="html"><![CDATA[<h1>First Blog Page</h1>
+</div>
 
-<p>Hello World!</p>
-]]></content>
-  </entry>
+
+  <footer>
+    <p class="meta">
+      
   
-</feed>
+
+<span class="byline author vcard">Posted by <span class="fn">Arthurhoo</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2017-02-18T22:03:27+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:03 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/" data-via="" data-counturl="http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2017/02/17/first-blog/" title="Previous Post: first blog">&laquo; first blog</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/">时间轮定时器介绍-Java实现</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2017/02/17/first-blog/">First Blog</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Arthurhoo -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
