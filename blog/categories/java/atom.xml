@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Java | Arthur's Blog]]></title>
   <link href="http://arthurhoo.github.io/blog/categories/java/atom.xml" rel="self"/>
   <link href="http://arthurhoo.github.io/"/>
-  <updated>2017-03-19T14:08:32+08:00</updated>
+  <updated>2017-03-19T14:12:40+08:00</updated>
   <id>http://arthurhoo.github.io/</id>
   <author>
     <name><![CDATA[Arthurhoo]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<h2>0. 背景</h2>
 
 <p>很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就
-改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含，可以自己实现一个定时器。</p>
+改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含，可以自己实现一个定时器。本文将详细介绍时间轮算法的思想和实现。<!-- more --></p>
 
 <p>时间轮定时结构（TimeWheel）是George Varghese和Anthony Lauck于1997年在论文<a href="https://pdfs.semanticscholar.org/e04e/548b287d48260def0ffe09692236d2a56ad3.pdf">《Hashed and Hierarchical Timing Wheels:Efficient Data Structures for Implementing a Timer Facility》</a>中提出的。
 目前在Linux内核、netty中都有应用。</p>
