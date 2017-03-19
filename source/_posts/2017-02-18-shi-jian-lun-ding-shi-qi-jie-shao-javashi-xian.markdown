@@ -3,13 +3,15 @@ layout: post
 title: "时间轮定时器介绍-Java实现"
 date: 2017-02-18 22:03:27 +0800
 comments: true
-categories: 
+categories: java Algorithm
+tags: [arthurhoo arthurhoo's blog TimeWheel 时间轮]
+keywords: arthurhoo arthurhoo's blog TimeWheel 时间轮 定时器
 ---
 
 ## 0. 背景
 
 很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就
-改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含，可以自己实现一个定时器。
+改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含，可以自己实现一个定时器。本文将详细介绍时间轮算法的思想和实现。<!-- more -->
 
 时间轮定时结构（TimeWheel）是George Varghese和Anthony Lauck于1997年在论文[《Hashed and Hierarchical Timing Wheels:Efficient Data Structures for Implementing a Timer Facility》](https://pdfs.semanticscholar.org/e04e/548b287d48260def0ffe09692236d2a56ad3.pdf)中提出的。
 目前在Linux内核、netty中都有应用。
