@@ -4,7 +4,7 @@
   <title><![CDATA[Arthur's Blog]]></title>
   <link href="http://arthurhoo.github.io/atom.xml" rel="self"/>
   <link href="http://arthurhoo.github.io/"/>
-  <updated>2017-03-19T12:53:04+08:00</updated>
+  <updated>2017-03-19T12:59:53+08:00</updated>
   <id>http://arthurhoo.github.io/</id>
   <author>
     <name><![CDATA[Arthurhoo]]></name>
@@ -385,17 +385,6 @@ TimeWheel主要包含四个：
 <h3>总结</h3>
 
 <p>本文讲述了全局定时器的时间轮算法实现方式，如有不妥欢迎大家指出。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[First Blog]]></title>
-    <link href="http://arthurhoo.github.io/blog/2017/02/17/first-blog/"/>
-    <updated>2017-02-17T22:51:25+08:00</updated>
-    <id>http://arthurhoo.github.io/blog/2017/02/17/first-blog</id>
-    <content type="html"><![CDATA[<h1>First Blog Page</h1>
-
-<p>Hello World!</p>
 ]]></content>
   </entry>
   
