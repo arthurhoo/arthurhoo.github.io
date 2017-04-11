@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Arthur's Blog]]></title>
-  <link href="http://arthurhoo.github.io/atom.xml" rel="self"/>
-  <link href="http://arthurhoo.github.io/"/>
-  <updated>2017-03-19T16:25:48+08:00</updated>
-  <id>http://arthurhoo.github.io/</id>
+  <link href="http://www.arthurhoo.com/atom.xml" rel="self"/>
+  <link href="http://www.arthurhoo.com/"/>
+  <updated>2017-04-11T16:12:06+08:00</updated>
+  <id>http://www.arthurhoo.com/</id>
   <author>
     <name><![CDATA[Arthurhoo]]></name>
     
@@ -14,10 +14,142 @@
 
   
   <entry>
+    <title type="html"><![CDATA[特殊情况下的java异常优化]]></title>
+    <link href="http://www.arthurhoo.com/blog/2017/04/11/te-shu-qing-kuang-xia-de-javayi-chang-you-hua/"/>
+    <updated>2017-04-11T14:58:38+08:00</updated>
+    <id>http://www.arthurhoo.com/blog/2017/04/11/te-shu-qing-kuang-xia-de-javayi-chang-you-hua</id>
+    <content type="html"><![CDATA[<blockquote><p>最近做了限流组件的开发，其中对限流场景下的异常抛出进行了性能优化，现记录下来以备自查，也和大家分享。</p></blockquote>
+
+<h2>引言</h2>
+
+<p>在java中抛出异常使我们处理程序错误的一种手段，但是在某些特定的场景下，抛出异常也是我们业务逻辑的一部分。比如，在限流组件中，对超过阈值的请求抛出异常，通过快速失败来保证服务器的稳定也是一种手段。这个时候异常就成了限流组件业务逻辑的一部分。如何优化类似限流抛出异常的这种情况下的性能，是本文要讨论的重点。<!-- more --></p>
+
+<h2>场景特点和Exception的性能问题</h2>
+
+<p>展开讨论之前我们先总结一下限流场景的异常抛出的特点，也规范一下我们讨论的范围：
+1. 异常作为限流业务的一部分，并不关心堆栈，只关心异常类型和message
+2. 限流情况下抛出异常频繁，会有大量的异常对象产生</p>
+
+<p>我们都知道Java虚拟机在创建Exception对象的时候通常要比创建普通对象耗时，这主要是因为创建Exception及其子类对象的时候，jvm需要将异常堆栈捕获并填充到对象中。这个过程是相当耗时的。同时，在引言描述的场景中，限流情况下会抛出大量的异常，这些异常对象只使用一次，在抛出之后依然占用内存空间，这会增加Young GC的次数。</p>
+
+<p>在我的场景中，限流是通过推送规则到服务器上执行。规则是应用维度隔离的，一个规则包含一类限流异常，一个应用通常十几条规则。有三个特点：</p>
+
+<ul>
+<li>抛出的异常类型是我们预定的BizException类, 类型一样，不同的只是message，业务系统通过message来区分被限流的服务和场景。</li>
+<li>BizException的message是一条限流配置一个message</li>
+<li>抛出的异常是业务需要的异常，对于业务系统来说有用的是异常的类型和message来判断是否限流和哪一个规则限流，对于异常堆栈并不关心</li>
+</ul>
+
+
+<p>所以，我们的优化从两个方面着手：</p>
+
+<ul>
+<li>减少创建Exception对象的时间</li>
+<li>减少创建的Exception对象的数量</li>
+</ul>
+
+
+<h2>优化方案</h2>
+
+<h3>减少异常创建的数量</h3>
+
+<p>我们只需要为每条限流规则创建一个不同message的异常就可以了。 这样异常的个数就固定了，大大节省了内存空间，减少GC次数。</p>
+
+<p><code>所以解决办法就是：将每一个配置的限流异常单例化。在限流服务启动的时候创建异常对象，存入一个静态map，形成一个异常池</code></p>
+
+<p>简化代码示例：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// 创建Exception的方法改为如下形式
+</span><span class='line'>public class BizExceptionFactory {
+</span><span class='line'>
+</span><span class='line'>    private static final String DEFAULT_BIZ_EXCEPTION = "DEFAULT LIMIT EXCEPTION";
+</span><span class='line'>
+</span><span class='line'>    private static final Map&lt;String, BizException&gt; exceptionMap = new ConcurrentHashMap&lt;String, BizException&gt;();
+</span><span class='line'>
+</span><span class='line'>    public static BizException newInstance(String message){
+</span><span class='line'>        synchronized (BizExceptionFactory.class){
+</span><span class='line'>            BizException exception = exceptionMap.get(message);
+</span><span class='line'>            if(exception == null){
+</span><span class='line'>                exception = new BizException(message);
+</span><span class='line'>                exceptionMap.put(message,exception);
+</span><span class='line'>            }
+</span><span class='line'>            return exception;
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>限流后抛出异常的代码改为：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>throw BizFactory.newInstance(message);</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>提升Exception对象创建性能</h3>
+
+<p>Exception对象创建的时候耗时要比普通对象更多，这个瓶颈就是，创建对象的时候需要获得线程栈的一个快照，然后通过fillInStackTrace填充堆栈到Exception对象。jdk中的代码如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public synchronized Throwable fillInStackTrace() {
+</span><span class='line'>        if (stackTrace != null ||
+</span><span class='line'>            backtrace != null /* Out of protocol state */ ) {
+</span><span class='line'>            fillInStackTrace(0);
+</span><span class='line'>            stackTrace = UNASSIGNED_STACK;
+</span><span class='line'>        }
+</span><span class='line'>        return this;
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>去除填充堆栈的逻辑，就可以大大缩减创建Exception对象的时间。</p>
+
+<p>在自定义的异常类中覆盖如下方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@Override
+</span><span class='line'>    public Throwable fillInStackTrace() {
+</span><span class='line'>        return this;
+</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>浅薄认识，欢迎大家指正！</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[时间轮定时器介绍-Java实现]]></title>
-    <link href="http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/"/>
+    <link href="http://www.arthurhoo.com/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/"/>
     <updated>2017-02-18T22:03:27+08:00</updated>
-    <id>http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian</id>
+    <id>http://www.arthurhoo.com/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian</id>
     <content type="html"><![CDATA[<h2>0. 背景</h2>
 
 <p>很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就

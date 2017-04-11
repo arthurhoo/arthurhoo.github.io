@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Algorithm | Arthur's Blog]]></title>
-  <link href="http://arthurhoo.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
-  <link href="http://arthurhoo.github.io/"/>
-  <updated>2017-03-19T16:25:48+08:00</updated>
-  <id>http://arthurhoo.github.io/</id>
+  <link href="http://www.arthurhoo.com/blog/categories/algorithm/atom.xml" rel="self"/>
+  <link href="http://www.arthurhoo.com/"/>
+  <updated>2017-04-11T16:12:06+08:00</updated>
+  <id>http://www.arthurhoo.com/</id>
   <author>
     <name><![CDATA[Arthurhoo]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[时间轮定时器介绍-Java实现]]></title>
-    <link href="http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/"/>
+    <link href="http://www.arthurhoo.com/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/"/>
     <updated>2017-02-18T22:03:27+08:00</updated>
-    <id>http://arthurhoo.github.io/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian</id>
+    <id>http://www.arthurhoo.com/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian</id>
     <content type="html"><![CDATA[<h2>0. 背景</h2>
 
 <p>很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就
