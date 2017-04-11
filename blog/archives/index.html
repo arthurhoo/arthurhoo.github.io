@@ -5,12 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Arthur's Blog</title>
+  <title>Blog Archive - Arthur's Blog</title>
   <meta name="author" content="Arthurhoo">
 
   
-  <meta name="description" content="最近做了限流组件的开发，其中对限流场景下的异常抛出进行了性能优化，现记录下来以备自查，也和大家分享。 引言 在java中抛出异常使我们处理程序错误的一种手段，但是在某些特定的场景下，抛出异常也是我们业务逻辑的一部分。比如，在限流组件中，对超过阈值的请求抛出异常， &hellip;">
-  <meta name="keywords" content="java BigData Distributed System">
+  <meta name="description" content=" Blog Archive 2017 特殊情况下的java异常优化
+Apr 11 2017 posted in java 时间轮定时器介绍-Java实现
+Feb 18 2017 posted in algorithm, java ">
+  
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -19,7 +21,7 @@
   <meta name="google-site-verification" content="YtsUxV1EzmW_hInk5f77y0V2_pMzU5uEk5a5GWVcAbk" />
 
   
-  <link rel="canonical" href="http://www.arthurhoo.com">
+  <link rel="canonical" href="http://www.arthurhoo.com/blog/archives">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Arthur's Blog" type="application/atom+xml">
@@ -90,97 +92,61 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article role="article">
   
-  
-  
-    <article>
-      
   <header>
-    
-      <h1 class="entry-title"><a href="/blog/2017/04/11/te-shu-qing-kuang-xia-de-javayi-chang-you-hua/">特殊情况下的java异常优化</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2017-04-11T14:58:38+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>2:58 pm</span></time>
-        <a href="/blog/2017/04/11/te-shu-qing-kuang-xia-de-javayi-chang-you-hua/#comments" id="2127700" du="" su="">0条评论</a>
-        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2127700"></script>
-        
-        
-      </p>
+    <h1 class="entry-title">Blog Archive</h1>
     
   </header>
-
-
-  <div class="entry-content"><blockquote><p>最近做了限流组件的开发，其中对限流场景下的异常抛出进行了性能优化，现记录下来以备自查，也和大家分享。</p></blockquote>
-
-<h2>引言</h2>
-
-<p>在java中抛出异常使我们处理程序错误的一种手段，但是在某些特定的场景下，抛出异常也是我们业务逻辑的一部分。比如，在限流组件中，对超过阈值的请求抛出异常，通过快速失败来保证服务器的稳定也是一种手段。这个时候异常就成了限流组件业务逻辑的一部分。如何优化类似限流抛出异常的这种情况下的性能，是本文要讨论的重点。</div>
   
+  <div id="blog-archives">
+
+
+
   
-    <footer>
-      <a rel="full-article" href="/blog/2017/04/11/te-shu-qing-kuang-xia-de-javayi-chang-you-hua/">Read on &rarr;</a>
-    </footer>
+  <h2>2017</h2>
+
+<article>
   
+<h1><a href="/blog/2017/04/11/te-shu-qing-kuang-xia-de-javayi-chang-you-hua/">特殊情况下的java异常优化</a></h1>
+<time datetime="2017-04-11T14:58:38+08:00" pubdate><span class='month'>Apr</span> <span class='day'>11</span> <span class='year'>2017</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/java/'>java</a></span>
+</footer>
 
 
-    </article>
+</article>
+
+
+
+<article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/">时间轮定时器介绍-Java实现</a></h1>
-    
-    
-      <p class="meta">
-        
+<h1><a href="/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/">时间轮定时器介绍-Java实现</a></h1>
+<time datetime="2017-02-18T22:03:27+08:00" pubdate><span class='month'>Feb</span> <span class='day'>18</span> <span class='year'>2017</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/algorithm/'>algorithm</a>, <a class='category' href='/blog/categories/java/'>java</a></span>
+</footer>
 
 
+</article>
 
-
-<time class='entry-date' datetime='2017-02-18T22:03:27+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2017</span></span> <span class='time'>10:03 pm</span></time>
-        <a href="/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/#comments" id="2127700" du="" su="">0条评论</a>
-        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2127700"></script>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>0. 背景</h2>
-
-<p>很多中间件内部需要一些定时任务。这类定时任务最简单的是依赖quartz等定时组件实现。依赖第三方包，在进行组件升级的时候会有不兼容的问题，比如spring4对quartz的依赖接口就
-改变了，必须升级quartz。第三方包的api变化是一个很大问题。为了做到自包含，可以自己实现一个定时器。本文将详细介绍时间轮算法的思想和实现。</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2017/02/18/shi-jian-lun-ding-shi-qi-jie-shao-javashi-xian/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
+  
+</article>
+
+
+</div>
+
 <aside class="sidebar">
   
     
   
 </aside>
+
 
     </div>
   </div>
