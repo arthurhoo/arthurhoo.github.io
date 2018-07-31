@@ -4,7 +4,7 @@
   <title><![CDATA[Arthur's Blog]]></title>
   <link href="http://www.arthurhoo.com/atom.xml" rel="self"/>
   <link href="http://www.arthurhoo.com/"/>
-  <updated>2018-07-31T16:07:49+08:00</updated>
+  <updated>2018-07-31T16:13:33+08:00</updated>
   <id>http://www.arthurhoo.com/</id>
   <author>
     <name><![CDATA[Arthur Hu]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Test]]></title>
-    <link href="http://www.arthurhoo.com/blog/2018/07/31/test/"/>
-    <updated>2018-07-31T15:59:13+08:00</updated>
-    <id>http://www.arthurhoo.com/blog/2018/07/31/test</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[特殊情况下的java异常优化]]></title>
